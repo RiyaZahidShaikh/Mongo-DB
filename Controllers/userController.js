@@ -1,12 +1,12 @@
 const User = require("../Models/user")
 
 const getUser = async(req, res) => {
-    const user = await User.find()
+    const viewUser = await User.find()
 
-    if(!user){
+    if(!viewUser){
         res.send("User not found")
     }
-    res.send(user)
+    res.send(viewUser)
 }
 
 const createUser = async(req, res) => {
@@ -15,4 +15,24 @@ const createUser = async(req, res) => {
     res.send(user)
 }
 
-module.exports = {getUser, createUser};
+const updateUser = async(req, res) => {
+        const userId = req.params.id;
+        const updateData = req.body; 
+        const updatedUser = await User.findByIdAndUpdate(userId, updateData); //, { new: true, runValidators: true }
+
+        if (!updatedUser) {
+            return res.status(404).send("User not present");
+        }
+    res.send("User has been updated");
+}
+
+const deleteUser = async(req, res) => {
+    const userId = req.params.id;
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+        return res.send("User not present");
+    }
+    res.send("User deleted");
+}
+
+module.exports = {getUser, createUser, updateUser, deleteUser};
