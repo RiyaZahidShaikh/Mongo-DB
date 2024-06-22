@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const user = require("./Routes/user")
+const user = require("./Routes/user");
+const product = require("./Routes/product")
+const orders = require("./Routes/orders")
 
 const PORT = 8000;
 const app = express();
@@ -21,7 +23,9 @@ app.use(express.json());
 
 
 //Router in use
-app.use(user)
+app.use(user);
+app.use(product);
+app.use(orders);
 
 //Server listening
 app.listen(PORT, () => {
