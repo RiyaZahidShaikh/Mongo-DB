@@ -7,8 +7,8 @@ var Schema = mongoose.Schema;
 
 const ordersSchema = new Schema({
     _id: Number,
-    User: [{ type: Schema.Types.ObjectId, ref: user }],
-    Product: [{ type: Schema.Types.ObjectId, ref: product }],
+    User: [{ type: Number, ref: user }],
+    Product: [{ type: Number, ref: product }],
     Quantity: Number,
     order_date: Date,
     order_status: String,

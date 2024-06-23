@@ -1,4 +1,6 @@
 const Orders = require("../Models/orders");
+const User = require("../Models/user");
+const Product = require("../Models/product");
 
 const getOrders = async(req, res) => {
     try {
@@ -13,15 +15,16 @@ const orderDetails = async(req, res) => {
     try {
         const OrdersId = req.params.id;
         const orderDetail = await Orders.findById(OrdersId)
-        .populate('user')
-        .populate('product')
-        .exec();
+        .populate('User')  // Make sure 'User' is a string
+        .populate('Product')  // And 'Product' is a string
+        .exec();  // Ensure to call exec or await the query
+    
+        if (!orderDetail) {
+            console.log('Order not found');
+            return;
+        }
 
-    if (!orderDetail) {
-        return res.status(404).send("Order not found");
-    }
-
-    res.status(200).send(orderDetail);
+        console.log('Order details:', orderDetail);
 } catch (error) {
     console.error("Error fetching order details:", error);
     res.status(500).send("Internal Server Error");
