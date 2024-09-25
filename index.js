@@ -1,14 +1,15 @@
+require('dotenv').config()
+
 const express = require("express");
 const mongoose = require("mongoose");
 const user = require("./Routes/user");
 const product = require("./Routes/product")
 const orders = require("./Routes/orders")
 
-const PORT = 8000;
 const app = express();
 
 //mongodb connection
-mongoose.connect("mongodb://localhost:27017/sampleProject");
+mongoose.connect(process.env.MONGODB_URI);
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
@@ -28,6 +29,6 @@ app.use(product);
 app.use(orders);
 
 //Server listening
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
